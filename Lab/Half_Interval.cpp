@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
@@ -12,10 +13,10 @@ float calc(float value) {
 void display(float *xl, float *fxl, float *xu, float *fxu, float *xm, float *fxm, float *err){
     
     cout << itr++ << "\t";
-    cout << *xl << "\t" << *fxl << "\t";
-    cout << *xu << "\t" << *fxu << "\t";
-    cout << *xm << "\t" << *fxm << "\t";
-    cout << *err << "\n";
+    cout << fixed << setprecision(4) << *xl << "\t" << fixed << setprecision(4) << *fxl << "\t";
+    cout << fixed << setprecision(4) << *xu << "\t" << fixed << setprecision(4) << *fxu << "\t";
+    cout << fixed << setprecision(4) << *xm << "\t" << fixed << setprecision(4) << *fxm << "\t";
+    cout << fixed << setprecision(4) << *err << "\n";
 }
 
 float halfInterval(float *xl, float *fxl, float *xu, float *fxu, float *xm, float *fxm, float *err) {
@@ -48,23 +49,33 @@ float halfInterval(float *xl, float *fxl, float *xu, float *fxu, float *xm, floa
 int main() {
     float xl, fxl, xu, fxu, xm, fxm, err;
     
-    xl = 1;
+    cout << "Enter the lower initial guess: ";
+    cin >> xl;
+    
+    cout << "Enter the upper initial guess: ";
+    cin >> xu;
+
     fxl = calc(xl);
-    xu = 2;
     fxu = calc(xu);
+
+    if(fxl > 0 || fxu < 0) {
+        cout << "Invalid guesses";
+        exit(0);
+    }
+
     xm = (xl+xu)/2;
     fxm = calc(xm);
     err = (xu - xl)/xu;
     
-    cout << "Utr" << "\t";
+    cout << "Itr" << "\t";
     cout << "xl" << "\t" << "fxl" << "\t";
     cout << "xu" << "\t" << "fxu" << "\t";
     cout << "xm" << "\t" << "fxm" << "\t";
     cout << "err" << "\n";
 
-    float x = halfInterval(&xl, &fxl, &xu, &fxu, &xm, &fxm, &err);
+    float root = halfInterval(&xl, &fxl, &xu, &fxu, &xm, &fxm, &err);
 
-    cout << "\nRoot is:" << x;
+    cout << "\nRoot is:" << fixed << setprecision(2) << root;
 
     return 0;
 }
