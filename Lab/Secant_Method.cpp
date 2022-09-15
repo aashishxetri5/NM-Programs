@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 
 using namespace std;
 
@@ -7,13 +8,6 @@ int itr = 1;
 
 float fx(float val) {
     return (val*val*val - val - 3);
-}
-
-float* getPosError(float *error) {
-	if(*error < 0) {
-	*error = (-1 * (*error) );
-	}
-	return error;
 }
 
 float calculate(float *x_prev, float *fxp, float *xn, float *fxn, float *x_next, float *fx_next, float *error) {
@@ -38,9 +32,9 @@ float calculate(float *x_prev, float *fxp, float *xn, float *fxn, float *x_next,
         *x_next = *xn - ((*xn-*x_prev)/(*fxn-*fxp) * *fxn );
         *fx_next = fx(*x_next);
 
-		*error = (*x_next - *xn) / *x_next;
+		*error = abs( (*x_next - *xn) / *x_next );
 		
-		return  calculate(x_prev, fxp, xn, fxn, x_next, fx_next, getPosError(error));
+		return  calculate(x_prev, fxp, xn, fxn, x_next, fx_next, error);
 	} else {
 		return *x_next;
 	}
@@ -61,14 +55,14 @@ int main(){
     fxn = fx(xn);
     x_next = xn - ((xn-x_prev)/(fxn-fxp) * fxn );
     fx_next = fx(x_next);
-	error = (x_next - xn) / x_next;
+	error = abs( (x_next - xn) / x_next );
 
 	cout << "Itr" << setw(10) << right << "xn-1" << setw(10) << right << "fxn-1" << setw(10) << right;
     cout << "xn" << setw(10) << right << "fxn" << setw(10) << right << "xn+1" << setw(10) << right;
     cout << "fxn+1" << setw(10) << right << "Error\n";
 
 
-    float root = calculate(&x_prev, &fxp, &xn, &fxn, &x_next, &fx_next, getPosError(&error));
+    float root = calculate(&x_prev, &fxp, &xn, &fxn, &x_next, &fx_next, &error);
 
     cout << "\nThe root is: " << fixed << setprecision(2) << root;
 

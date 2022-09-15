@@ -66,9 +66,10 @@ int main() {
     xm = (xl+xu)/2;
     fxm = calc(xm);
     err = (xu - xl)/xu;
-    
-    cout << "Itr" << "\t";
-    cout << "xl" << "\t" << "fxl" << "\t";
+    err = abs(err);
+
+    cout << "Itr\t";
+    cout << "xl\t" << "fxl\t";
     cout << "xu" << "\t" << "fxu" << "\t";
     cout << "xm" << "\t" << "fxm" << "\t";
     cout << "err" << "\n";

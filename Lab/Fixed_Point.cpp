@@ -9,13 +9,6 @@ float gx(float x) {
 	return (x*x*x-3);
 }
 
-float* getPosError(float *error) {
-	if(*error < 0) {
-	*error = (-1 * (*error) );
-	}
-	return error;
-}
-
 float calculate(float *xn, float *x_next, float *error) {
 	
 	cout << setw(5) << left << itr++;
@@ -27,9 +20,9 @@ float calculate(float *xn, float *x_next, float *error) {
 	if(*error >= 0.005f) {
 		*xn = *x_next;
 		*x_next = gx(*xn);
-		*error = (*x_next - *xn) / *x_next;
+		*error = abs( (*x_next - *xn) / *x_next );
 		
-		return calculate(xn, x_next, getPosError(error) );
+		return calculate(xn, x_next, error);
 	} else {
 		return *x_next;
 	}
@@ -44,14 +37,14 @@ int main() {
 	cin >> xn;
 	
 	x_next = gx(xn);
-	error = (x_next - xn) / x_next;
+	error = abs( (x_next - xn) / x_next );
 
 	cout << "Itr" << setw(5) << right << "xn" << setw(10) << right;
 	cout << "x_next" << setw(10) << right << "error\n";
 	
-	float root = calculate(&xn, &x_next, getPosError(&error));
+	float root = calculate(&xn, &x_next, &error);
 	
-	cout << "\nThe root is: " << fixed << setprecision(2) << root; root;
+	cout << "\nThe root is: " << fixed << setprecision(2) << root;
 	
 	
 	return 0;
