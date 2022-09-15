@@ -46,4 +46,6 @@ int main() {
     yp = Lagrange(x, y, xp, size);
 
     printf("f(x): %.3f", yp);
+
+    return 0;
 }
