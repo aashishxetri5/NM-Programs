@@ -1,12 +1,12 @@
 #include <iostream>
 #include <iomanip>
-
+#include <cmath>
 using namespace std;
 
 int itr = 1;
 
 float gx(float x) {
-	return (x*x*x-3);
+	return (cbrt(x+3));
 }
 
 float calculate(float *xn, float *x_next, float *error) {
@@ -44,7 +44,7 @@ int main() {
 	
 	float root = calculate(&xn, &x_next, &error);
 	
-	cout << "\nThe root is: " << fixed << setprecision(2) << root;
+	cout << "\nThe root is: " << fixed << setprecision(5) << root;
 	
 	
 	return 0;
